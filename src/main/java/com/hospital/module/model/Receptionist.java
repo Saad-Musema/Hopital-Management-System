@@ -1,2 +1,4 @@
-package com.hospital.module.model;public class Receptionist {
+package com.hospital.module.model;
+
+public class Receptionist {
 }
