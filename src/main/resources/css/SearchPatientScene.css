@@ -1,0 +1,12 @@
+.main-container {
+  -fx-padding: 20;
+}
+
+.header-label {
+  -fx-font-size: 24px;
+}
+
+.search-btn {
+  -fx-background-color: lightblue;
+  -fx-text-fill: white;
+}

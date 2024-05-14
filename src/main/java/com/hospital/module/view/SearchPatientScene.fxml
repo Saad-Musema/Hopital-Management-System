@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hospital.module.view.SearchPatientScene"
+      spacing="20" styleClass="main-container" alignment="CENTER">
+
+    <Label text="Search Patient" styleClass="header-label">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+    <TextField fx:id="searchField" promptText="Enter Patient ID or Name" />
+    <Button text="Search" onAction="#onSearchClicked" styleClass="search-btn"/>
+    <ListView fx:id="searchResults" prefHeight="200.0" />
+</VBox>

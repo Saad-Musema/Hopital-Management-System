@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hospital.module.view.DoctorDashboardScene"
+      styleClass="main-container">
+
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 10;">
+            <Button text="Write Prescription" onAction="#onWritePrescription" styleClass="menu-btn"/>
+            <Button text="Add Diagnosis" onAction="#onAddDiagnosis" styleClass="menu-btn"/>
+        </VBox>
+    </left>
+    <center>
+        <ListView fx:id="appointmentsListView" styleClass="list-view">
+            <!-- This list will show the scheduled appointments -->
+        </ListView>
+    </center>
+</BorderPane>
