@@ -1,5 +1,6 @@
 package com.hospital.module.view;
 
+import com.hospital.module.controller.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -14,9 +15,11 @@ public class MainScene {
     @FXML
     private Button nurseBtn;
 
+    MainController mainController = new MainController();
+
     @FXML
     private void onReceptionistClicked() {
-        // Add action for receptionist button click
+
         System.out.println("Receptionist button clicked");
     }
 

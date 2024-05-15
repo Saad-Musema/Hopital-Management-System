@@ -3,10 +3,7 @@ package com.hospital.module.controller;
 import com.hospital.module.db.DatabaseConnection;
 import com.hospital.module.model.Patient;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 
 
 public class ReceptionistController {
@@ -51,7 +48,23 @@ public class ReceptionistController {
 //        String checkPhoneNumber = "S";
 //    }
 
-    // Database operations
+    private boolean searchPatient(Integer patientID) {
+        String searchSQL = "SELECT * FROM PATIENT WHERE patientID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(searchSQL)) {
+            pstmt.setInt(1, patientID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                // If the ResultSet has at least one row, the patient with the given ID exists
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error searching for patient: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+
     private static boolean insertPatient(Patient patient) {
         String sql = "INSERT INTO patient (Name, Age, Gender, PhoneNumber, Address)\n" +
                 "VALUES (?, ?, ?, ?, ?);\n";
