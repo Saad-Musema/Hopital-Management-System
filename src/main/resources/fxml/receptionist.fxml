@@ -1,0 +1,29 @@
+<!-- receptionist_page.fxml -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hospital.module.db.ReceptionistCont">
+
+    <top>
+        <Label text="Receptionist Page" style="-fx-font-size: 18pt;" />
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <Button text="Add Patient" onAction="#handleAddPatient" />
+            <Button text="Create Appointment" onAction="#handleCreateAppointment" />
+            <HBox alignment="CENTER" spacing="5">
+                <TextField fx:id="phoneNumberField" promptText="Phone Number" />
+                <Button text="Search Patient" onAction="#handleSearchPatient" />
+            </HBox>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+</BorderPane>

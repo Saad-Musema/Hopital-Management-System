@@ -2,7 +2,15 @@ package com.hospital.module.view;
 
 import com.hospital.module.controller.MainController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class MainScene {
 
@@ -19,19 +27,84 @@ public class MainScene {
 
     @FXML
     private void onReceptionistClicked() {
+        try {
 
-        System.out.println("Receptionist button clicked");
+
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/receptionist.fxml")));
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the scene on the new stage
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
+
+            // Set any other properties for the new stage if needed
+            newStage.setTitle("Receptionist Page");
+
+            // Show the new stage
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Caught an exception: " + e.getMessage());
+            e.printStackTrace();
+        }}
+
+        @FXML
+        private void onDoctorClicked() {
+            try {
+                // Load the doctor dashboard FXML file
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/DoctorDashboardScene.fxml")));
+
+                // Create a new stage
+                Stage newStage = new Stage();
+
+                // Set the scene on the new stage
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
+
+                // Set any other properties for the new stage if needed
+                newStage.setTitle("Doctor Dashboard");
+
+                // Show the new stage
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Caught an exception: " + e.getMessage());
+                e.printStackTrace();
+            }
+            System.out.println("Doctor button clicked");
+        }
+
+        @FXML
+        private void onNurseClicked() {
+            try {
+                // Load the nurse dashboard FXML file
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/NurseDashboardScene.fxml")));
+
+                // Create a new stage
+                Stage newStage = new Stage();
+
+                // Set the scene on the new stage
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
+
+                // Set any other properties for the new stage if needed
+                newStage.setTitle("Nurse Dashboard");
+
+                // Show the new stage
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Caught an exception: " + e.getMessage());
+                e.printStackTrace();
+            }
+            System.out.println("Nurse button clicked");
+        }
+
     }
 
-    @FXML
-    private void onDoctorClicked() {
-        // Add action for doctor button click
-        System.out.println("Doctor button clicked");
-    }
-
-    @FXML
-    private void onNurseClicked() {
-        // Add action for nurse button click
-        System.out.println("Nurse button clicked");
-    }
-}

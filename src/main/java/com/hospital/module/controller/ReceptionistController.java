@@ -8,6 +8,8 @@ import java.sql.*;
 
 public class ReceptionistController {
 
+
+
     public static void addNewPatient(String name, int age, String gender, String phoneNumber,String address) {
         // Validate inputs
         if (isValidName(name) && isValidAge(age) && isValidAddress(address)) {
@@ -48,11 +50,11 @@ public class ReceptionistController {
 //        String checkPhoneNumber = "S";
 //    }
 
-    private boolean searchPatient(Integer patientID) {
-        String searchSQL = "SELECT * FROM PATIENT WHERE patientID = ?";
+    public boolean searchPatient(String PhoneNumber) {
+        String searchSQL = "SELECT * FROM PATIENT WHERE PhoneNumber = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(searchSQL)) {
-            pstmt.setInt(1, patientID);
+            pstmt.setString(1, PhoneNumber);
             try (ResultSet rs = pstmt.executeQuery()) {
                 // If the ResultSet has at least one row, the patient with the given ID exists
                 return rs.next();

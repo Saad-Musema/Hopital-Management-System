@@ -42,7 +42,15 @@
       <version>21.0.1</version>
     </dependency>
 
-    <!-- JavaFX Graphics -->
+      <dependency>
+          <groupId>com.sun.mail</groupId>
+          <artifactId>javax.mail</artifactId>
+          <version>1.6.2</version>
+      </dependency>
+
+
+
+      <!-- JavaFX Graphics -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>

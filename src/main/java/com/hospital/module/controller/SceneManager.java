@@ -16,6 +16,8 @@ public class SceneManager {
         this.primaryStage = primaryStage;
     }
 
+    public SceneManager(){};
+
     public void showMainScene() {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/MainScene.fxml")));
@@ -26,6 +28,20 @@ public class SceneManager {
             System.out.println(e);
         }
     }
+
+    public Runnable showLoginPopup = () -> {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/userFound.fxml")));
+            Stage loginStage = new Stage();
+            loginStage.initModality(Modality.APPLICATION_MODAL);
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("Patient Information");
+            loginStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
+
 
     // Add methods for other scenes as needed
 }
