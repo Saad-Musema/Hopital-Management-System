@@ -1,6 +1,7 @@
 package com.hospital.module.controller;
 
 import com.hospital.module.model.Prescription;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,11 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 public class PrescriptionFileHandler {
-  private static final String FILE_PATH = "prescriptions.txt";
+  private static final String FILE_DIRECTORY = "prescriptions/";
 
-  // Method to write a prescription to a file
+  // Method to write a prescription to a file based on patient name
   public void writePrescription(Prescription prescription) {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+    String fileName = getFilePath(prescription.getPatientName());
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       String formattedDate = dateFormat.format(prescription.getDate());
       writer.write(prescription.getPatientId() + "," + formattedDate + "," + prescription.getNotes() + "\n");
@@ -22,11 +24,12 @@ public class PrescriptionFileHandler {
     }
   }
 
-  // Method to read all prescriptions from a file
-  public List<Prescription> readPrescriptions() {
+  // Method to read all prescriptions from a file based on patient name
+  public List<Prescription> readPrescriptions(String patientName) {
     List<Prescription> prescriptions = new ArrayList<>();
+    String fileName = getFilePath(patientName);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
       String line;
       while ((line = reader.readLine()) != null) {
         String[] data = line.split(",");
@@ -40,5 +43,14 @@ public class PrescriptionFileHandler {
       e.printStackTrace();
     }
     return prescriptions;
+  }
+
+  // Helper method to get the file path based on patient name
+  private String getFilePath(String patientName) {
+    File directory = new File(FILE_DIRECTORY);
+    if (!directory.exists()) {
+      directory.mkdirs(); // Create the directory if it doesn't exist
+    }
+    return FILE_DIRECTORY + patientName + "_prescriptions.txt";
   }
 }

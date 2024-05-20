@@ -22,6 +22,8 @@
     </ComboBox>
     <DatePicker fx:id="datePicker" promptText="Select Date" />
     <ComboBox fx:id="timeSlotComboBox" promptText="Select Time">
+
     </ComboBox>
+    <TextArea fx:id="reasonField" promptText="Reason for Appointment" prefWidth="200" prefHeight="100" />
     <Button text="Book Appointment" onAction="#onBookAppointmentClicked" styleClass="submit-btn"/>
 </VBox>

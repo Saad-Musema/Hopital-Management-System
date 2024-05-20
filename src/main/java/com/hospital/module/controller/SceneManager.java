@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 public class SceneManager {
@@ -20,12 +21,19 @@ public class SceneManager {
 
     public void showMainScene() {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/MainScene.fxml")));
-            primaryStage.setTitle("Hospital Management System");
-            primaryStage.setScene(new Scene(root, 600, 400));
-            primaryStage.show();
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/MainScene.fxml";
+            URL resourceUrl = new URL(absolutePath);
+            System.out.println(resourceUrl);
+            if (resourceUrl != null) {
+                Parent root = FXMLLoader.load(resourceUrl);
+                primaryStage.setTitle("Hospital Management System");
+                primaryStage.setScene(new Scene(root, 600, 400));
+                primaryStage.show();
+            } else {
+                System.err.println("MainScene.fxml not found");
+            }
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 

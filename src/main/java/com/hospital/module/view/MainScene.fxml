@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.hospital.module.view.MainScene"
-      spacing="20"
-      styleClass="main-container">
+      styleClass="main-container" spacing="20" >
 
-    <Button text="Welcome to Hospital Management System!" disable="true" styleClass="welcome-msg"/>
-    <Button text="Receptionist" onAction="#onReceptionistClicked" styleClass="role-btn"/>
-    <Button text="Doctor" onAction="#onDoctorClicked" styleClass="role-btn"/>
-    <Button text="Nurse" onAction="#onNurseClicked" styleClass="role-btn"/>
+    <Button disable="true" styleClass="welcome-msg" text="Welcome to Hospital Management System!" textFill="#194d1c" />
+    <Button onAction="#onReceptionistClicked" styleClass="role-btn" text="Receptionist" />
+    <Button onAction="#onDoctorClicked" styleClass="role-btn" text="Doctor" />
+    <Button onAction="#onNurseClicked" styleClass="role-btn" text="Nurse" />
 
 </VBox>

@@ -4,11 +4,19 @@ import java.util.Date;
 
 public class Prescription {
   private int patientId;
+  private String patientName; // New field for patient's name
   private Date date;
   private String notes;
 
   // Constructors
   public Prescription() {
+  }
+
+  public Prescription(int patientId, String patientName, Date date, String notes) {
+    this.patientId = patientId;
+    this.patientName = patientName;
+    this.date = date;
+    this.notes = notes;
   }
 
   public Prescription(int patientId, Date date, String notes) {
@@ -24,6 +32,14 @@ public class Prescription {
 
   public void setPatientId(int patientId) {
     this.patientId = patientId;
+  }
+
+  public String getPatientName() {
+    return patientName;
+  }
+
+  public void setPatientName(String patientName) {
+    this.patientName = patientName;
   }
 
   public Date getDate() {
@@ -46,9 +62,10 @@ public class Prescription {
   @Override
   public String toString() {
     return "Prescription{" +
-        "patientId=" + patientId +
-        ", date=" + date +
-        ", notes='" + notes + '\'' +
-        '}';
+            "patientId=" + patientId +
+            ", patientName='" + patientName + '\'' +
+            ", date=" + date +
+            ", notes='" + notes + '\'' +
+            '}';
   }
 }

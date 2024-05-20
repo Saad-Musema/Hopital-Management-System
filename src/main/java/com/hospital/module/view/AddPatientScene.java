@@ -1,9 +1,13 @@
 package com.hospital.module.view;
 
+import com.hospital.module.db.DatabaseConnection;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import java.sql.*;
+
+import java.sql.PreparedStatement;
 
 public class AddPatientScene {
 
@@ -12,29 +16,84 @@ public class AddPatientScene {
   @FXML
   private TextField ageField;
   @FXML
-  private CheckBox maleCheckBox;
+  private ComboBox<String> genderComboBox;
   @FXML
-  private CheckBox femaleCheckBox;
-  @FXML
-  private TextField phoneField;
+  private TextField phoneNumberField;
   @FXML
   private TextField addressField;
   @FXML
-  private Button addPatientButton;
+  private TextField emailField;
+  @FXML
+  private Button addButton;
+  @FXML
+  private Button clearButton;
+
+
 
   @FXML
-  private void onAddPatientClicked() {
-    // Add logic to handle patient addition
+  private void handleAddButtonAction() {
+    // Code to add the patient
     String name = nameField.getText();
-    int age = Integer.parseInt(ageField.getText());
-    CheckBox maleTCheckBox;
-    boolean isMale = maleCheckBox.isSelected();
-    boolean isFemale = femaleCheckBox.isSelected();
-    String phone = phoneField.getText();
+    String age = ageField.getText();
+    String gender = genderComboBox.getValue();
+    String phoneNumber = phoneNumberField.getText();
     String address = addressField.getText();
+    String email = emailField.getText();
 
-    System.out.println("Adding Patient: " + name + ", Age: " + age + ", Gender: " +
-        (isMale ? "Male" : "Female") + ", Phone: " + phone + ", Address: " + address);
-    // Implement your logic to add the patient to the database or a data structure
+    try {
+      // Establish database connection
+      Connection conn = DatabaseConnection.getConnection();
+
+      // Create the SQL query
+      String insertQuery = "INSERT INTO patient (Name, Age, Gender, PhoneNumber, Address, email) " +
+              "VALUES (?, ?, ?, ?, ?, ?)";
+
+      // Create PreparedStatement
+      PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+      pstmt.setString(1, name);
+      pstmt.setString(2, age);
+      pstmt.setString(3, gender);
+      pstmt.setString(4, phoneNumber);
+      pstmt.setString(5, address);
+      pstmt.setString(6, email);
+
+      // Execute the query
+      int rowsAffected = pstmt.executeUpdate();
+
+      if (rowsAffected > 0) {
+        System.out.println("Patient added successfully.");
+        // Optionally, you can clear the form fields here
+        clearFormFields();
+      } else {
+        System.out.println("Failed to add patient.");
+      }
+
+      // Close the PreparedStatement and Connection
+      pstmt.close();
+      conn.close();
+    } catch (SQLException e) {
+      System.out.println("Error adding patient: " + e.getMessage());
+    }
+  }
+
+  private void clearFormFields() {
+    // Clear all form fields after adding patient
+    nameField.clear();
+    ageField.clear();
+    genderComboBox.getSelectionModel().clearSelection();
+    phoneNumberField.clear();
+    addressField.clear();
+    emailField.clear();
+  }
+
+  @FXML
+  private void handleClearButtonAction() {
+    // Clear all fields
+    nameField.clear();
+    ageField.clear();
+    genderComboBox.setValue(null);
+    phoneNumberField.clear();
+    addressField.clear();
+    emailField.clear();
   }
 }

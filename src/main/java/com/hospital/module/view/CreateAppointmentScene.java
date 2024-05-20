@@ -1,5 +1,6 @@
 package com.hospital.module.view;
 
+import com.hospital.module.Services.EmailService;
 import com.hospital.module.Services.TimeSlotGenerator;
 import com.hospital.module.db.DatabaseConnection;
 import com.hospital.module.model.Doctor;
@@ -14,6 +15,7 @@ import javafx.scene.control.DateCell;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
+import javax.mail.MessagingException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,9 +55,9 @@ public class CreateAppointmentScene {
     loadAppointmentsFromDatabase();
 
     // Add listener to patient name field for live feedback
-    patientNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-      checkPatientExists(newValue);
-    });
+//    patientNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+//      checkPatientExists(newValue);
+//    });
   }
 
   private void loadDoctorsFromDatabase() {
@@ -144,7 +146,7 @@ public class CreateAppointmentScene {
 
         String selectedDoctor = doctorNameField.getValue();
         int doctorId = Doctor.getDoctorId(selectedDoctor);
-        List<Timestamp> bookedAppointments = Doctor.getDoctorAppointments(doctorId);
+        List<Timestamp> bookedAppointments = Doctor.getAllDoctorAppointments(doctorId);
 
         List<LocalTime> allSlots = TimeSlotGenerator.generateTimeSlots(LocalTime.of(8, 30), LocalTime.of(17, 0), 20);
 
@@ -170,6 +172,7 @@ public class CreateAppointmentScene {
 
   @FXML
   private void onBookAppointmentClicked() {
+    System.out.println("Book Appointment Button Clicked");
     CompletableFuture.runAsync(() -> {
       try {
         // Retrieve form values
@@ -211,8 +214,16 @@ public class CreateAppointmentScene {
         // Insert new appointment into database
         insertAppointment(doctorId, patientId, Timestamp.valueOf(appointmentDate.atTime(appointmentTime)), reason);
 
+
+
         Platform.runLater(() -> {
-          showAlert("Success", "Appointment successfully booked.", Alert.AlertType.INFORMATION);
+          EmailService emailService = new EmailService("musemasaad3@gmail.com", "H@rveySpect0r");
+            try {
+                emailService.sendEmail("saadmusema3@gmail.com", "Hello", "This is a trail!!");
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+            showAlert("Success", "Appointment successfully booked.", Alert.AlertType.INFORMATION);
         });
       } catch (SQLException e) {
         e.printStackTrace();

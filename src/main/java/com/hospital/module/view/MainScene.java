@@ -28,10 +28,12 @@ public class MainScene {
     @FXML
     private void onReceptionistClicked() {
         try {
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/receptionist.fxml";
+            URL resourceUrl = new URL(absolutePath);
+            System.out.println(resourceUrl);
 
-
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/receptionist.fxml")));
+            if (resourceUrl != null){
+                Parent root = FXMLLoader.load(resourceUrl);
 
             // Create a new stage
             Stage newStage = new Stage();
@@ -44,7 +46,10 @@ public class MainScene {
             newStage.setTitle("Receptionist Page");
 
             // Show the new stage
-            newStage.show();
+            newStage.show();}
+            else{
+                System.err.println("MainScene.fxml not found");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -55,21 +60,30 @@ public class MainScene {
         @FXML
         private void onDoctorClicked() {
             try {
-                // Load the doctor dashboard FXML file
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/DoctorDashboardScene.fxml")));
+                String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/DoctorDashboardScene.fxml";
+                URL resourceUrl = new URL(absolutePath);
+                System.out.println(resourceUrl);
 
-                // Create a new stage
-                Stage newStage = new Stage();
+                // Check if the resource URL is not null
+                if (resourceUrl != null) {
+                    // Load the DoctorDashboardScene.fxml using the absolute path
+                    Parent root = FXMLLoader.load(resourceUrl);
 
-                // Set the scene on the new stage
-                Scene scene = new Scene(root);
-                newStage.setScene(scene);
+                    // Create a new stage
+                    Stage newStage = new Stage();
 
-                // Set any other properties for the new stage if needed
-                newStage.setTitle("Doctor Dashboard");
+                    // Set the scene on the new stage
+                    Scene scene = new Scene(root);
+                    newStage.setScene(scene);
 
-                // Show the new stage
-                newStage.show();
+                    // Set any other properties for the new stage if needed
+                    newStage.setTitle("Doctor Dashboard");
+
+                    // Show the new stage
+                    newStage.show();
+                } else {
+                    System.err.println("DoctorDashboardScene.fxml not found");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -79,7 +93,8 @@ public class MainScene {
             System.out.println("Doctor button clicked");
         }
 
-        @FXML
+
+    @FXML
         private void onNurseClicked() {
             try {
                 // Load the nurse dashboard FXML file

@@ -59,7 +59,7 @@ public class Doctor extends Person {
         "} " + super.toString();
   }
 
-  public ArrayList getAllDoctorAppointments(Integer doctorId){
+  public static ArrayList getAllDoctorAppointments(Integer doctorId){
     ArrayList<Timestamp> appointments = new ArrayList<>();
     String searchSQL = "SELECT * FROM appointment WHERE doctor_id = ?";
 

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javax.mail.MessagingException;
 import javax.swing.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 public class ReceptionistCont {
@@ -25,25 +26,30 @@ public class ReceptionistCont {
     @FXML
     private void handleAddPatient() throws MessagingException {
         System.out.println("Add Patient button clicked");
-        EmailService emailService = new EmailService("musemaSaad3@gmail.com", "H@rveySpect0r");
-
-        emailService.sendEmail("saadmusema3@gmail.com", "Hello Sir", "This is a test email");
         try {
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/AddPatientScene.fxml";
+            URL resourceUrl = new URL(absolutePath);
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/AddPatientScene.fxml")));
+            // Check if the resource URL is not null
+            if (resourceUrl != null) {
+                // Load the AddPatientScene.fxml using the absolute path
+                Parent root = FXMLLoader.load(resourceUrl);
 
-            // Create a new stage
-            Stage newStage = new Stage();
+                // Create a new stage
+                Stage newStage = new Stage();
 
-            // Set the scene on the new stage
-            Scene scene = new Scene(root);
-            newStage.setScene(scene);
+                // Set the scene on the new stage
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
 
-            // Set any other properties for the new stage if needed
-            newStage.setTitle("Receptionist Page");
+                // Set any other properties for the new stage if needed
+                newStage.setTitle("Receptionist Page");
 
-            // Show the new stage
-            newStage.show();
+                // Show the new stage
+                newStage.show();
+            } else {
+                System.err.println("AddPatientScene.fxml not found");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -51,27 +57,37 @@ public class ReceptionistCont {
         }
     }
 
+
+
     @FXML
     private void handleCreateAppointment() {
         // Implement logic for creating an appointment
         System.out.println("Create Appointment button clicked");
 
         try {
-            // Use the current class loader to get the resource correctly
-            Parent root = FXMLLoader.load(getClass().getResource("/com/hospital/module/view/CreateAppointmentScene.fxml"));
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/CreateAppointmentScene.fxml";
+            URL resourceUrl = new URL(absolutePath);
 
-            // Create a new stage
-            Stage newStage = new Stage();
+            // Check if the resource URL is not null
+            if (resourceUrl != null) {
+                // Load the CreateAppointmentScene.fxml using the absolute path
+                Parent root = FXMLLoader.load(resourceUrl);
 
-            // Set the scene on the new stage
-            Scene scene = new Scene(root);
-            newStage.setScene(scene);
+                // Create a new stage
+                Stage newStage = new Stage();
 
-            // Set any other properties for the new stage if needed
-            newStage.setTitle("Receptionist Page");
+                // Set the scene on the new stage
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);
 
-            // Show the new stage
-            newStage.show();
+                // Set any other properties for the new stage if needed
+                newStage.setTitle("Receptionist Page");
+
+                // Show the new stage
+                newStage.show();
+            } else {
+                System.err.println("CreateAppointmentScene.fxml not found");
+            }
         } catch (IOException e) {
             System.err.println("IOException occurred while loading the FXML file.");
             e.printStackTrace();
@@ -80,6 +96,7 @@ public class ReceptionistCont {
             e.printStackTrace();
         }
     }
+
 
 
 

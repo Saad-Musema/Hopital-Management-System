@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hospital.module.view.AddPatientScene"
+      spacing="20" styleClass="main-container" alignment="CENTER"
+>
+
+    <Label styleClass="header-label" text="Add Patient">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+
+    <TextField fx:id="nameField" promptText="Name" />
+    <TextField fx:id="ageField" promptText="Age" />
+    <ComboBox fx:id="genderComboBox" promptText="Select Gender">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Male" />
+                <String fx:value="Female" />
+                <String fx:value="Other" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <TextField fx:id="phoneNumberField" promptText="Phone Number" />
+    <TextField fx:id="addressField" promptText="Address" />
+    <TextField fx:id="emailField" promptText="Email" />
+
+    <Button onAction="#handleAddButtonAction" styleClass="submit-btn" text="Add Patient" />
+    <Button onAction="#handleClearButtonAction" styleClass="submit-btn" text="Clear" />
+
+</VBox>
