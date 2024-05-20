@@ -1,86 +1,63 @@
 package com.hospital.module.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Appointment {
   private int appointmentId;
-  private Patient patient;
-  private Doctor doctor;
-  private Date appointmentDate;
-  private String appointmentTime; // Added field for appointment time
+  private int doctorId;
+  private int patientId;
+  private Timestamp appointmentDate;
   private String reason;
+  private String status;
 
-  // Constructors
-  public Appointment() {
-  }
-
-  public Appointment(Patient patient, Doctor doctor, Date appointmentDate, String appointmentTime, String reason) {
-    this.patient = patient;
-    this.doctor = doctor;
+  public Appointment(int appointmentId, int doctorId, int patientId, Timestamp appointmentDate, String reason, String status) {
+    this.appointmentId = appointmentId;
+    this.doctorId = doctorId;
+    this.patientId = patientId;
     this.appointmentDate = appointmentDate;
-    this.appointmentTime = appointmentTime; // Initialize the new field
     this.reason = reason;
+    this.status = status;
   }
 
-  // Getters and Setters
   public int getAppointmentId() {
     return appointmentId;
   }
 
-  public void setAppointmentId(int appointmentId) {
-    this.appointmentId = appointmentId;
+  public int getDoctorId() {
+    return doctorId;
   }
 
-  public Patient getPatient() {
-    return patient;
+  public int getPatientId() {
+    return patientId;
   }
 
-  public void setPatient(Patient patient) {
-    this.patient = patient;
-  }
-
-  public Doctor getDoctor() {
-    return doctor;
-  }
-
-  public void setDoctor(Doctor doctor) {
-    this.doctor = doctor;
-  }
-
-  public Date getAppointmentDate() {
+  public Timestamp getAppointmentDate() {
     return appointmentDate;
-  }
-
-  public void setAppointmentDate(Date appointmentDate) {
-    this.appointmentDate = appointmentDate;
-  }
-
-  public String getAppointmentTime() {
-    return appointmentTime;
-  }
-
-  public void setAppointmentTime(String appointmentTime) {
-    this.appointmentTime = appointmentTime;
   }
 
   public String getReason() {
     return reason;
   }
 
-  public void setReason(String reason) {
-    this.reason = reason;
+  public String getStatus() {
+    return status;
   }
 
-  // toString method
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
   @Override
   public String toString() {
     return "Appointment{" +
-        "appointmentId=" + appointmentId +
-        ", patient=" + patient +
-        ", doctor=" + doctor +
-        ", appointmentDate=" + appointmentDate +
-        ", appointmentTime='" + appointmentTime + '\'' +
-        ", reason='" + reason + '\'' +
-        '}';
+            "appointmentId=" + appointmentId +
+            ", patient=" + patientId +
+            ", doctor=" + doctorId +
+            ", appointmentDate=" + appointmentDate +
+            ", reason='" + reason + '\'' +
+            '}';
   }
 }
+
+
+

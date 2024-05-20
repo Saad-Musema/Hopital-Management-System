@@ -56,7 +56,7 @@ public class ReceptionistController {
              PreparedStatement pstmt = conn.prepareStatement(searchSQL)) {
             pstmt.setString(1, PhoneNumber);
             try (ResultSet rs = pstmt.executeQuery()) {
-                // If the ResultSet has at least one row, the patient with the given ID exists
+
                 return rs.next();
             }
         } catch (SQLException e) {

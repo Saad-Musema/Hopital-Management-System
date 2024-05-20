@@ -1,5 +1,10 @@
 package com.hospital.module.model;
 
+import com.hospital.module.db.DatabaseConnection;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Doctor extends Person {
@@ -53,4 +58,77 @@ public class Doctor extends Person {
         ", appointments=" + appointments +
         "} " + super.toString();
   }
+
+  public ArrayList getAllDoctorAppointments(Integer doctorId){
+    ArrayList<Timestamp> appointments = new ArrayList<>();
+    String searchSQL = "SELECT * FROM appointment WHERE doctor_id = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(searchSQL)) {
+
+      preparedStatement.setInt(1, doctorId);
+
+      try (ResultSet rs = preparedStatement.executeQuery()) {
+        while (rs.next()) {
+          Timestamp appointmentTimestamp = rs.getTimestamp("appointment_date");
+          String status = rs.getString("status");
+
+
+        }
+      }
+    } catch (SQLException e) {
+      System.err.println("SQL Error: " + e.getMessage());
+    } catch (Exception e) {
+      System.err.println("Error: " + e.getMessage());
+    }
+
+    return appointments;
+  }
+
+  public static ArrayList getDoctorAppointments(Integer doctorId) {
+    ArrayList<Timestamp> appointments = new ArrayList<>();
+    String searchSQL = "SELECT appointment_date, status FROM appointment WHERE doctor_id = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement preparedStatement = conn.prepareStatement(searchSQL)) {
+
+      preparedStatement.setInt(1, doctorId);
+
+      try (ResultSet rs = preparedStatement.executeQuery()) {
+        while (rs.next()) {
+          Timestamp appointmentTimestamp = rs.getTimestamp("appointment_date");
+          String status = rs.getString("status");
+
+          if(status == "Scheduled") {
+            appointments.add(appointmentTimestamp);
+          }
+
+
+        }
+      }
+    } catch (SQLException e) {
+      System.err.println("SQL Error: " + e.getMessage());
+    } catch (Exception e) {
+      System.err.println("Error: " + e.getMessage());
+    }
+
+    return appointments;
+  }
+
+
+  public static Integer getDoctorId(String name){
+    try{
+      Connection conn = DatabaseConnection.getConnection();
+      String SQL = "Select doctor_id from doctor where name = ? ";
+      PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+      preparedStatement.setString(1, "name");
+      try (ResultSet rs = preparedStatement.executeQuery()) {
+        return rs.getInt("doctor_id");
+      }
+    }catch(Exception e){
+      System.out.println("Error: " + e.getMessage());
+    }
+
+    return 1;
+  };
 }

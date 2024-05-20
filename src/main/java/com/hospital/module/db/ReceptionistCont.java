@@ -57,8 +57,8 @@ public class ReceptionistCont {
         System.out.println("Create Appointment button clicked");
 
         try {
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/CreateAppointmentScene.fxml")));
+            // Use the current class loader to get the resource correctly
+            Parent root = FXMLLoader.load(getClass().getResource("/com/hospital/module/view/CreateAppointmentScene.fxml"));
 
             // Create a new stage
             Stage newStage = new Stage();
@@ -73,12 +73,15 @@ public class ReceptionistCont {
             // Show the new stage
             newStage.show();
         } catch (IOException e) {
+            System.err.println("IOException occurred while loading the FXML file.");
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Caught an exception: " + e.getMessage());
+            System.err.println("An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private void handleSearchPatient() {

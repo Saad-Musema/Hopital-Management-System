@@ -17,25 +17,11 @@
         </font>
     </Label>
     <TextField fx:id="patientNameField" promptText="Patient Name" />
+    <Label fx:id="patientExistenceLabel" text="" />
     <ComboBox fx:id="doctorNameField" promptText="Select Doctor">
-        <!-- Example items, you should populate this from your database -->
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Dr. Smith" />
-                <String fx:value="Dr. Johnson" />
-            </FXCollections>
-        </items>
     </ComboBox>
     <DatePicker fx:id="datePicker" promptText="Select Date" />
     <ComboBox fx:id="timeSlotComboBox" promptText="Select Time">
-        <!-- Example items -->
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="9:00 AM" />
-                <String fx:value="10:00 AM" />
-            </FXCollections>
-        </items>
     </ComboBox>
-    <TextArea fx:id="reasonField" promptText="Reason for Visit" />
     <Button text="Book Appointment" onAction="#onBookAppointmentClicked" styleClass="submit-btn"/>
 </VBox>

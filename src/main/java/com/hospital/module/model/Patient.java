@@ -1,5 +1,11 @@
 package com.hospital.module.model;
 
+import com.hospital.module.db.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 
@@ -17,6 +23,23 @@ public class Patient extends Person {
         super(name, age, gender, phoneNumber, address);
     }
 
+    public static int getPatientId(String patientName) throws SQLException {
+        String query = "SELECT PatientID FROM patient WHERE Name = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, patientName);
+
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("PatientID");
+                } else {
+                    throw new SQLException("Patient not found");
+                }
+            }
+        }
+    }
 
 
     // Getters and Setters
@@ -50,5 +73,28 @@ public class Patient extends Person {
                 ", dischargeDate=" + dischargeDate +
                 '}';
     }
+
+    public static boolean checkPatientExistence(String name){
+      try{
+          Connection conn = DatabaseConnection.getConnection();
+
+          String searchSQL = "SELECT * FROM PATIENT WHERE NAME = ?";
+          PreparedStatement preparedStatement = conn.prepareStatement(searchSQL);
+          preparedStatement.setString(1, "Name");
+          try (ResultSet rs = preparedStatement.executeQuery()) {
+              return rs.next();
+          }
+
+      }catch(SQLException e){
+          System.out.println("Error: " + e.getMessage());
+          return false;
+      }
+      catch(Exception e){
+          System.out.println("Error Checking Patient Existence!");
+          return false;
+      }
+
+
+    };
 }
 
