@@ -52,7 +52,19 @@ public class CreateAppointmentScene {
     // Set DatePicker to only allow future dates
     restrictDatePicker();
 
-    loadAppointmentsFromDatabase();
+    doctorNameField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue != null && !newValue.isEmpty()) {
+        loadAppointmentsFromDatabase();
+      }
+    });
+
+    datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue != null) {
+        loadAppointmentsFromDatabase();
+      }
+    });
+
+//    loadAppointmentsFromDatabase();
 
     // Add listener to patient name field for live feedback
 //    patientNameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -145,20 +157,31 @@ public class CreateAppointmentScene {
         Thread.sleep(1000);
 
         String selectedDoctor = doctorNameField.getValue();
+        LocalDate selectedDate = datePicker.getValue();
+
+        if (selectedDoctor == null || selectedDoctor.isEmpty() || selectedDate == null) {
+          // Either doctor or date is not selected, do nothing
+          return;
+        }
         int doctorId = Doctor.getDoctorId(selectedDoctor);
         List<Timestamp> bookedAppointments = Doctor.getAllDoctorAppointments(doctorId);
 
         List<LocalTime> allSlots = TimeSlotGenerator.generateTimeSlots(LocalTime.of(8, 30), LocalTime.of(17, 0), 20);
 
+        System.out.println(allSlots);
 
 
         List<LocalTime> bookedSlots = bookedAppointments.stream()
                 .map(timestamp -> timestamp.toLocalDateTime().toLocalTime())
                 .collect(Collectors.toList());
 
+        System.out.println(bookedSlots);
+
         List<LocalTime> availableSlots = allSlots.stream()
                 .filter(slot -> !bookedSlots.contains(slot))
                 .collect(Collectors.toList());
+
+        System.out.println(availableSlots);
 
         Platform.runLater(() -> {
           timeSlotComboBox.setItems(FXCollections.observableArrayList(availableSlots));
@@ -191,12 +214,14 @@ public class CreateAppointmentScene {
         }
 
 //        // Check if patient exists
-//        if (!Patient.checkPatientExistence(patientName)) {
-//          Platform.runLater(() -> {
-//            showAlert("Error", "Patient does not exist.", Alert.AlertType.ERROR);
-//          });
-//          return;
-//        }
+        System.out.println(patientName);
+
+        if (!Patient.checkPatientExistence(patientName)) {
+          Platform.runLater(() -> {
+            showAlert("Error", "Patient does not exist.", Alert.AlertType.ERROR);
+          });
+          return;
+        }
 
         // Fetch IDs
         int doctorId = Doctor.getDoctorId(doctorName);
@@ -214,7 +239,9 @@ public class CreateAppointmentScene {
         // Insert new appointment into database
         insertAppointment(doctorId, patientId, Timestamp.valueOf(appointmentDate.atTime(appointmentTime)), reason);
 
-
+        Platform.runLater(() -> {
+          showAlert("Appointment Created!", "Appointment has been created successfully!", Alert.AlertType.ERROR);
+        });
 
         Platform.runLater(() -> {
           EmailService emailService = new EmailService("musemasaad3@gmail.com", "H@rveySpect0r");

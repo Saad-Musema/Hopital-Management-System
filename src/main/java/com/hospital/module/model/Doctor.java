@@ -6,6 +6,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Doctor extends Person {
   private String specialty;
@@ -59,8 +60,8 @@ public class Doctor extends Person {
         "} " + super.toString();
   }
 
-  public static ArrayList getAllDoctorAppointments(Integer doctorId){
-    ArrayList<Timestamp> appointments = new ArrayList<>();
+  public static List getAllDoctorAppointments(Integer doctorId){
+    List<Timestamp> appointments = new ArrayList<>();
     String searchSQL = "SELECT * FROM appointment WHERE doctor_id = ?";
 
     try (Connection conn = DatabaseConnection.getConnection();
@@ -72,9 +73,16 @@ public class Doctor extends Person {
         while (rs.next()) {
           Timestamp appointmentTimestamp = rs.getTimestamp("appointment_date");
           String status = rs.getString("status");
+              System.out.println(appointmentTimestamp + "with Status" + status);
+          if(Objects.equals(status, "Scheduled")){
+
+            appointments.add(appointmentTimestamp);
+          }
 
 
         }
+          System.out.println(appointments);
+        return appointments;
       }
     } catch (SQLException e) {
       System.err.println("SQL Error: " + e.getMessage());

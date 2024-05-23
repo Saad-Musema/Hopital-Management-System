@@ -74,27 +74,34 @@ public class Patient extends Person {
                 '}';
     }
 
-    public static boolean checkPatientExistence(String name){
-      try{
-          Connection conn = DatabaseConnection.getConnection();
+    public static boolean checkPatientExistence(String name) {
+        try {
+            Connection conn = DatabaseConnection.getConnection();
 
-          String searchSQL = "SELECT * FROM PATIENT WHERE NAME = ?";
-          PreparedStatement preparedStatement = conn.prepareStatement(searchSQL);
-          preparedStatement.setString(1, "Name");
-          try (ResultSet rs = preparedStatement.executeQuery()) {
-              return rs.next();
-          }
+            String searchSQL = "SELECT * FROM PATIENT WHERE NAME = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(searchSQL);
+            preparedStatement.setString(1, name); // Use the name parameter
 
-      }catch(SQLException e){
-          System.out.println("Error: " + e.getMessage());
-          return false;
-      }
-      catch(Exception e){
-          System.out.println("Error Checking Patient Existence!");
-          return false;
-      }
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                // Print the ResultSet for debugging
+                while (rs.next()) {
+                    System.out.println("Patient found: " + rs.getString("NAME"));
+                    return true; // Return true if at least one row is found
+                }
+                // No patient found with the given name
+                System.out.println("No patient found with name: " + name);
+                return false;
+            }
 
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error Checking Patient Existence!");
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-    };
 }
 

@@ -40,6 +40,7 @@ public class MainScene {
 
             // Set the scene on the new stage
             Scene scene = new Scene(root);
+
             newStage.setScene(scene);
 
             // Set any other properties for the new stage if needed
@@ -74,6 +75,7 @@ public class MainScene {
 
                     // Set the scene on the new stage
                     Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/css/DoctorDashboardScene.css").toExternalForm());
                     newStage.setScene(scene);
 
                     // Set any other properties for the new stage if needed
