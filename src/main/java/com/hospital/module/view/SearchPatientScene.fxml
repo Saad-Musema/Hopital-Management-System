@@ -14,7 +14,11 @@
             <Font size="24.0" />
         </font>
     </Label>
-    <TextField fx:id="searchField" promptText="Enter Patient ID or Name" />
+    <TextField fx:id="searchField" promptText="Enter Patient ID or Name" styleClass="input-field"/>
+    <HBox alignment="CENTER" spacing="5">
+        <TextField fx:id="phonePrefixField" text="+251" editable="false" styleClass="prefix-field"/>
+        <TextField fx:id="phoneNumberField" promptText="Enter Phone Number" styleClass="input-field"/>
+    </HBox>
     <Button text="Search" onAction="#onSearchClicked" styleClass="search-btn"/>
-    <ListView fx:id="searchResults" prefHeight="200.0" />
+    <ListView fx:id="searchResults" prefHeight="200.0" styleClass="list-view"/>
 </VBox>
