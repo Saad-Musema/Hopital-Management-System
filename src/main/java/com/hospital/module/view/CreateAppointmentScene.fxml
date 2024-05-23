@@ -16,14 +16,13 @@
             <Font size="24.0" />
         </font>
     </Label>
-    <TextField fx:id="patientNameField" promptText="Patient Name" />
+    <TextField fx:id="patientNameField" promptText="Patient Name" styleClass="text-field"/>
     <Label fx:id="patientExistenceLabel" text="" />
-    <ComboBox fx:id="doctorNameField" promptText="Select Doctor">
+    <ComboBox fx:id="doctorNameField" promptText="Select Doctor" styleClass="combo-box">
     </ComboBox>
-    <DatePicker fx:id="datePicker" promptText="Select Date" />
-    <ComboBox fx:id="timeSlotComboBox" promptText="Select Time">
-
+    <DatePicker fx:id="datePicker" promptText="Select Date" styleClass="date-picker"/>
+    <ComboBox fx:id="timeSlotComboBox" promptText="Select Time" styleClass="combo-box">
     </ComboBox>
-    <TextArea fx:id="reasonField" promptText="Reason for Appointment" prefWidth="200" prefHeight="100" />
+    <TextArea fx:id="reasonField" promptText="Reason for Appointment" prefWidth="200" prefHeight="100" styleClass="text-area"/>
     <Button text="Book Appointment" onAction="#onBookAppointmentClicked" styleClass="submit-btn"/>
 </VBox>

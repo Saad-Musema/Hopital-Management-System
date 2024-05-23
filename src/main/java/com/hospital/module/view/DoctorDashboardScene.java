@@ -13,8 +13,13 @@ import javafx.util.Callback;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import static com.hospital.module.model.Doctor.getAllDoctorAppointments;
+import static com.hospital.module.model.Doctor.getDoctorAppointments;
 
 public class DoctorDashboardScene {
 
@@ -40,7 +45,9 @@ public class DoctorDashboardScene {
 
         int doctorId = 1; // Replace with the actual doctor's ID
 
-        List<Appointment> appointments = fetchDoctorAppointments(doctorId);
+        List<Appointment> appointments = getDoctorAppointments(doctorId);
+
+        Collections.sort(appointments, Comparator.comparing(Appointment::getAppointmentDate));
 
         Platform.runLater(() -> {
           ObservableList<Appointment> observableList = FXCollections.observableArrayList(appointments);
@@ -52,7 +59,7 @@ public class DoctorDashboardScene {
             }
           });
         });
-      } catch (InterruptedException | SQLException e) {
+      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     });
@@ -129,8 +136,9 @@ public class DoctorDashboardScene {
 
           Platform.runLater(() -> {
             appointment.setStatus(newStatus);
-            updateItem(appointment, false); // Refresh the cell with the updated status
+            updateItem(appointment, false);
           });
+
         } catch (SQLException e) {
           e.printStackTrace();
         }

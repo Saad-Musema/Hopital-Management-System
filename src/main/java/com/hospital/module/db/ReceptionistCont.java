@@ -23,6 +23,12 @@ public class ReceptionistCont {
     @FXML
     private TextField phoneNumberField;
 
+    Stage newStage = new Stage();
+
+    public void appointmentCreated() {
+        this.newStage.close();
+    }
+
     @FXML
     private void handleAddPatient() throws MessagingException {
         System.out.println("Add Patient button clicked");
@@ -35,11 +41,10 @@ public class ReceptionistCont {
                 // Load the AddPatientScene.fxml using the absolute path
                 Parent root = FXMLLoader.load(resourceUrl);
 
-                // Create a new stage
-                Stage newStage = new Stage();
 
                 // Set the scene on the new stage
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/css/AddPatientScene.css").toExternalForm());
                 newStage.setScene(scene);
 
                 // Set any other properties for the new stage if needed
@@ -73,11 +78,10 @@ public class ReceptionistCont {
                 // Load the CreateAppointmentScene.fxml using the absolute path
                 Parent root = FXMLLoader.load(resourceUrl);
 
-                // Create a new stage
-                Stage newStage = new Stage();
 
                 // Set the scene on the new stage
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/css/CreateAppointmentScene.css").toExternalForm());
                 newStage.setScene(scene);
 
                 // Set any other properties for the new stage if needed

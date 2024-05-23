@@ -93,9 +93,9 @@ public class Doctor extends Person {
     return appointments;
   }
 
-  public static ArrayList getDoctorAppointments(Integer doctorId) {
-    ArrayList<Timestamp> appointments = new ArrayList<>();
-    String searchSQL = "SELECT appointment_date, status FROM appointment WHERE doctor_id = ?";
+  public static List<Appointment> getDoctorAppointments(Integer doctorId) {
+    List<Appointment> appointments = new ArrayList<>();
+    String searchSQL = "SELECT appointment_id, doctor_id, patient_id, appointment_date, reason, status FROM appointment WHERE doctor_id = ?";
 
     try (Connection conn = DatabaseConnection.getConnection();
          PreparedStatement preparedStatement = conn.prepareStatement(searchSQL)) {
@@ -104,14 +104,16 @@ public class Doctor extends Person {
 
       try (ResultSet rs = preparedStatement.executeQuery()) {
         while (rs.next()) {
-          Timestamp appointmentTimestamp = rs.getTimestamp("appointment_date");
+          int appointmentId = rs.getInt("appointment_id");
+          int patientId = rs.getInt("patient_id");
+          Timestamp appointmentDate = rs.getTimestamp("appointment_date");
+          String reason = rs.getString("reason");
           String status = rs.getString("status");
 
-          if(status == "Scheduled") {
-            appointments.add(appointmentTimestamp);
+          if ("Scheduled".equals(status)) {
+            Appointment appointment = new Appointment(appointmentId, doctorId, patientId, appointmentDate, reason, status);
+            appointments.add(appointment);
           }
-
-
         }
       }
     } catch (SQLException e) {

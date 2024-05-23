@@ -1,6 +1,7 @@
 package com.hospital.module.view;
 
 import com.hospital.module.db.DatabaseConnection;
+import com.hospital.module.db.ReceptionistCont;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -44,6 +45,8 @@ public class AddPatientScene {
       // Establish database connection
       Connection conn = DatabaseConnection.getConnection();
 
+      ReceptionistCont receptionistCont = new ReceptionistCont();
+
       // Create the SQL query
       String insertQuery = "INSERT INTO patient (Name, Age, Gender, PhoneNumber, Address, email) " +
               "VALUES (?, ?, ?, ?, ?, ?)";
@@ -62,13 +65,15 @@ public class AddPatientScene {
 
       if (rowsAffected > 0) {
         System.out.println("Patient added successfully.");
-        // Optionally, you can clear the form fields here
+
+        receptionistCont.appointmentCreated();
         clearFormFields();
       } else {
         System.out.println("Failed to add patient.");
       }
 
       // Close the PreparedStatement and Connection
+
       pstmt.close();
       conn.close();
     } catch (SQLException e) {

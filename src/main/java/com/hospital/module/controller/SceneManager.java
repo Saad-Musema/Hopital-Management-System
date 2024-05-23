@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class SceneManager {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
 
     public SceneManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -27,7 +27,9 @@ public class SceneManager {
             if (resourceUrl != null) {
                 Parent root = FXMLLoader.load(resourceUrl);
                 primaryStage.setTitle("Hospital Management System");
-                primaryStage.setScene(new Scene(root, 600, 400));
+                Scene scene = new Scene(root, 600, 400);
+                scene.getStylesheets().add(getClass().getResource("/css/MainScene.css").toExternalForm());
+                primaryStage.setScene(scene);
                 primaryStage.show();
             } else {
                 System.err.println("MainScene.fxml not found");
@@ -51,5 +53,9 @@ public class SceneManager {
     };
 
 
+
+    public void closeStage(){
+        primaryStage.close();
+    }
     // Add methods for other scenes as needed
 }
