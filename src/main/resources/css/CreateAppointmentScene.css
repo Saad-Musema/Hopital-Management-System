@@ -1,12 +1,71 @@
 .main-container {
   -fx-padding: 20;
+  -fx-spacing: 15;
+  -fx-background-color: #f9f9f9;
+  -fx-border-color: #dcdcdc;
+  -fx-border-width: 2px;
+  -fx-border-radius: 10px;
+  -fx-background-radius: 10px;
+  -fx-alignment: center;
 }
 
 .header-label {
-  -fx-font-size: 24px;
+  -fx-font-size: 28px;
+  -fx-text-fill: #2c3e50;
+  -fx-font-weight: bold;
+  -fx-padding: 10 0 20 0;
+}
+
+.text-field {
+  -fx-background-color: white;
+  -fx-border-color: #dcdcdc;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 8;
+  -fx-font-size: 14px;
+}
+
+.combo-box {
+  -fx-background-color: white;
+  -fx-border-color: #dcdcdc;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 8;
+  -fx-font-size: 14px;
+}
+
+.date-picker {
+  -fx-background-color: white;
+  -fx-border-color: #dcdcdc;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 8;
+  -fx-font-size: 14px;
+}
+
+.text-area {
+  -fx-background-color: white;
+  -fx-border-color: #dcdcdc;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 8;
+  -fx-font-size: 14px;
 }
 
 .submit-btn {
-  -fx-background-color: lightblue;
+  -fx-background-color: #3498db;
   -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-padding: 10;
+}
+
+.submit-btn:hover {
+  -fx-background-color: #2980b9;
+}
+
+.submit-btn:pressed {
+  -fx-background-color: #1c6ea4;
 }
