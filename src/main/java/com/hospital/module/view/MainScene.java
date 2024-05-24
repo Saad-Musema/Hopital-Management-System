@@ -27,7 +27,7 @@ public class MainScene {
     private Button doctorBtn;
 
     @FXML
-    private Button nurseBtn;
+    private Button adminBtn;
 
     MainController mainController = new MainController();
 
@@ -37,11 +37,13 @@ public class MainScene {
     private void onReceptionistClicked() {
         try {
             loginFunction();
-
-            // Wait for the login function to complete
-            latch.await();
+//
+//            // Wait for the login function to complete
+//            latch.await();
 
             boolean check = LoginController.checkLogin();
+//            check = true;
+
             System.out.println(check);
 
             if (check) {
@@ -57,6 +59,7 @@ public class MainScene {
 
                     // Set the scene on the new stage
                     Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("/css/receptionist.css").toExternalForm());
 
                     newStage.setScene(scene);
 
@@ -82,43 +85,33 @@ public class MainScene {
     private void loginFunction() {
         latch = new CountDownLatch(1);
 
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
-                    URL loginUrl = new URL(loginPath);
-                    Parent loginRoot = FXMLLoader.load(loginUrl);
+        try {
+            String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
+            URL loginUrl = new URL(loginPath);
+            Parent loginRoot = FXMLLoader.load(loginUrl);
 
+            Stage newStage = new Stage();
+            Scene loginScene = new Scene(loginRoot);
 
+            newStage.setScene(loginScene);
+            newStage.setTitle("Receptionist Page");
 
-                    Platform.runLater(() -> {
-                        Stage newStage = new Stage();
-                        Scene loginScene = new Scene(loginRoot);
+            newStage.setOnHiding(event -> {
+                latch.countDown(); // Release the latch when the login window is closed
+            });
 
-                        newStage.setScene(loginScene);
-                        newStage.setTitle("Receptionist Page");
+            newStage.show();
 
-                        newStage.setOnHiding(event -> {
-                            latch.countDown(); // Release the latch when the login window is closed
-                        });
-
-                        newStage.show();
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    latch.countDown(); // Ensure the latch is released in case of an exception
-                } catch (Exception e) {
-                    System.out.println("Caught an exception: " + e.getMessage());
-                    e.printStackTrace();
-                    latch.countDown(); // Ensure the latch is released in case of an exception
-                }
-                return null;
-            }
-        };
-
-        new Thread(task).start();
+            latch.await(); // Wait until the login window is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+            latch.countDown(); // Ensure the latch is released in case of an exception
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            latch.countDown(); // Ensure the latch is released in case of an exception
+        }
     }
+
 //        private void loginFunction() throws IOException {
 //           try {
 //               String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
@@ -182,30 +175,40 @@ public class MainScene {
 
 
     @FXML
-        private void onNurseClicked() {
-            try {
-                // Load the nurse dashboard FXML file
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/hospital/module/view/NurseDashboardScene.fxml")));
+    private void onAdminClicked() {
+        try {
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/admin_dashboard.fxml";
+            URL resourceUrl = new URL(absolutePath);
+            System.out.println("URL IS" + resourceUrl);
+
+            // Check if the resource URL is not null
+            if (resourceUrl != null) {
+                // Load the DoctorDashboardScene.fxml using the absolute path
+                Parent root = FXMLLoader.load(resourceUrl);
 
                 // Create a new stage
                 Stage newStage = new Stage();
 
                 // Set the scene on the new stage
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/css/admin_dashboard.css").toExternalForm());
                 newStage.setScene(scene);
 
                 // Set any other properties for the new stage if needed
-                newStage.setTitle("Nurse Dashboard");
+                newStage.setTitle("Doctor Dashboard");
 
                 // Show the new stage
                 newStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                System.out.println("Caught an exception: " + e.getMessage());
-                e.printStackTrace();
+            } else {
+                System.err.println("DoctorDashboardScene.fxml not found");
             }
-            System.out.println("Nurse button clicked");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Caught an exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println("Doctor button clicked");
         }
 
     }

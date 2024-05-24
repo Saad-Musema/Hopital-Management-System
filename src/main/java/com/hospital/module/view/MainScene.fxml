@@ -10,6 +10,6 @@
     <Button disable="true" styleClass="welcome-msg" text="Welcome to Hospital Management System!" textFill="#194d1c" />
     <Button onAction="#onReceptionistClicked" styleClass="role-btn" text="Receptionist" />
     <Button onAction="#onDoctorClicked" styleClass="role-btn" text="Doctor" />
-    <Button onAction="#onNurseClicked" styleClass="role-btn" text="Nurse" />
+    <Button onAction="#onAdminClicked" styleClass="role-btn" text="Admin" />
 
 </VBox>

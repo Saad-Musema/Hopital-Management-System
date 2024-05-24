@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hospital.module.controller.AdminDashboardController"
+      spacing="20" styleClass="main-container" alignment="CENTER">
+
+    <Label text="Admin Dashboard - Add User" styleClass="header-label">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+
+    <TextField fx:id="nameField" promptText="Name" styleClass="input-field"/>
+    <TextField fx:id="emailField" promptText="Email" styleClass="input-field"/>
+    <PasswordField fx:id="passwordField" promptText="Password" styleClass="input-field"/>
+
+    <ComboBox fx:id="userTypeComboBox" promptText="User Type" styleClass="combo-box">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Doctor"/>
+                <String fx:value="Receptionist"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Button text="Add User" onAction="#handleAddUserAction" styleClass="submit-btn"/>
+</VBox>
