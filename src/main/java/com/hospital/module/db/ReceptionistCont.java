@@ -3,11 +3,13 @@ package com.hospital.module.db;
 import com.hospital.module.Services.EmailService;
 import com.hospital.module.controller.ReceptionistController;
 import com.hospital.module.controller.SceneManager;
+import com.hospital.module.controller.WritePrescriptionController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class ReceptionistCont {
@@ -23,10 +26,24 @@ public class ReceptionistCont {
     @FXML
     private TextField phoneNumberField;
 
+
+    @FXML
+    private TextField patientId;
+
+    @FXML
+    private DatePicker datePicker;
+
     Stage newStage = new Stage();
 
     public void appointmentCreated() {
         this.newStage.close();
+    }
+
+    @FXML void handleSearch(){
+        WritePrescriptionController writePrescriptionController = new WritePrescriptionController();
+        String patientID = patientId.getText();
+        LocalDate date = datePicker.getValue();
+        writePrescriptionController.openPrescriptionWithNotepad(date, patientID);
     }
 
     @FXML

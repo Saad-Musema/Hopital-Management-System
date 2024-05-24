@@ -29,7 +29,6 @@ public class AdminDashboardController {
     private ComboBox<String> userTypeComboBox;
 
     public void handleAddUserAction() {
-        System.out.println("Heyy");
 
         // Get user input from the UI components
         String name = nameField.getText();

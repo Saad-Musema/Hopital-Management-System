@@ -20,12 +20,13 @@ public class WriteDocumentController {
     private TextArea noteField;
 
     @FXML
-    private void writeMedicalDocument(String patientId) {
+    private void writeMedicalDocument() {
         // Get the selected date from the DatePicker
         LocalDate date = dateField.getValue();
 
         // Generate the file name using the patient ID and date
-        String fileName = patientId + "_" + date.toString() + ".txt";
+        String patientId = patientIdField.getText();
+        String fileName = patientId + ".txt";
 
         // Get the text from other fields
         String note = noteField.getText();

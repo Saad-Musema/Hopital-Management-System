@@ -19,7 +19,14 @@
                 <TextField fx:id="phoneNumberField" promptText="Phone Number" styleClass="search-field"/>
                 <Button text="Search Patient" onAction="#handleSearchPatient" styleClass="search-button"/>
             </HBox>
+
+            <HBox alignment="CENTER" spacing="10">
+                <TextField fx:id="patientIdField" promptText="Patient ID" styleClass="search-field"/>
+                <DatePicker fx:id="datePicker" promptText="Select Date" styleClass="date-picker"/>
+                <Button text="Search" onAction="#handleSearch" styleClass="search-button"/>
+            </HBox>
         </VBox>
+
     </center>
 
 

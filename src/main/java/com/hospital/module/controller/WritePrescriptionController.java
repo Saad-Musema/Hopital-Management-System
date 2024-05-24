@@ -84,14 +84,14 @@ public class WritePrescriptionController {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(date.toString() + "," + patientId + "," + note + "\n");
             JOptionPane.showMessageDialog(null, "Prescription saved successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            openPrescriptionWithNotepad(LocalDate.parse("2024-05-24"), "2");
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Failed to save prescription. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void openPrescriptionWithNotepad(LocalDate date, String patientId) {
+    public void openPrescriptionWithNotepad(LocalDate date, String patientId) {
         // Create the file name using patient ID and date
         String fileName = patientId + "_" + date.toString() + ".txt";
 
