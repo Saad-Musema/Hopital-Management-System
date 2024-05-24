@@ -21,6 +21,12 @@
                 <Button text="Search Patient" onAction="#handleSearchPatient" />
             </HBox>
         </VBox>
+
+        <HBox alignment="CENTER" spacing="10">
+            <TextField fx:id="patientIdField" promptText="Patient ID" styleClass="search-field"/>
+            <DatePicker fx:id="datePicker" promptText="Select Date" styleClass="date-picker"/>
+            <Button text="Search" onAction="#handleSearch" styleClass="search-button"/>
+        </HBox>
     </center>
 
     <padding>

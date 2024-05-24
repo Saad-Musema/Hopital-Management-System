@@ -1,0 +1,28 @@
+.main-container {
+    -fx-background-color: #e0f7fa; /* Light blue background */
+    -fx-padding: 20px;
+}
+
+.header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0277bd; /* Dark blue text */
+}
+
+.button {
+    -fx-background-color: #0288d1; /* Medium blue background */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-pref-width: 150px;
+}
+
+.text-area {
+    -fx-border-color: #0288d1; /* Medium blue border */
+    -fx-padding: 10px;
+}
+
+.text-field {
+    -fx-border-color: #0288d1; /* Medium blue border */
+    -fx-padding: 10px;
+}

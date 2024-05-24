@@ -6,11 +6,17 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,14 +98,81 @@ public class DoctorDashboardScene {
 
   @FXML
   private void onWritePrescription() {
-    System.out.println("Navigate to write prescription scene");
-    // Logic to open write prescription interface
+    try {
+      System.out.println("Navigate to write prescription scene");
+
+      // Define the path to the FXML file
+      String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/writePrescription.fxml";
+      URL resourceUrl = new URL(absolutePath);
+      System.out.println(resourceUrl);
+
+      if (resourceUrl != null) {
+        // Load the FXML file
+        Parent root = FXMLLoader.load(resourceUrl);
+
+        // Create a new stage
+        Stage newStage = new Stage();
+
+        // Set the scene on the new stage
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/WritePrescription.css").toExternalForm());
+
+        newStage.setScene(scene);
+
+        // Set any other properties for the new stage if needed
+        newStage.setTitle("Write Prescription Page");
+
+        // Show the new stage
+        newStage.show();
+      } else {
+        System.err.println("write_prescription.fxml not found");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      System.out.println("Caught an exception: " + e.getMessage());
+      e.printStackTrace();
+    }
+
   }
 
   @FXML
   private void onAddDiagnosis() {
-    System.out.println("Navigate to add diagnosis scene");
-    // Logic to open add diagnosis interface
+    try {
+      System.out.println("Navigate to write prescription scene");
+
+      // Define the path to the FXML file
+      String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/writeDocument.fxml";
+      URL resourceUrl = new URL(absolutePath);
+      System.out.println(resourceUrl);
+
+      if (resourceUrl != null) {
+        // Load the FXML file
+        Parent root = FXMLLoader.load(resourceUrl);
+
+        // Create a new stage
+        Stage newStage = new Stage();
+
+        // Set the scene on the new stage
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/WriteDocument.css").toExternalForm());
+
+        newStage.setScene(scene);
+
+        // Set any other properties for the new stage if needed
+        newStage.setTitle("Write Prescription Page");
+
+        // Show the new stage
+        newStage.show();
+      } else {
+        System.err.println("write_prescription.fxml not found");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      System.out.println("Caught an exception: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   static class AppointmentCell extends ListCell<Appointment> {

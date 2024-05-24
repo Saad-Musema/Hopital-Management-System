@@ -8,7 +8,7 @@ import com.hospital.module.controller.SceneManager;
 
 public class Main extends Application {
 
-    Stage primaryStage;
+    public Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {

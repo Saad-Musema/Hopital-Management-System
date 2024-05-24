@@ -18,6 +18,8 @@ import java.util.Objects;
 import javafx.concurrent.Task;
 import java.util.concurrent.CountDownLatch;
 
+import static com.hospital.module.controller.LoginController.checkLogin;
+
 public class MainScene {
 
     @FXML
@@ -31,48 +33,37 @@ public class MainScene {
 
     MainController mainController = new MainController();
 
-    private CountDownLatch latch;
+    public static CountDownLatch latch;
 
     @FXML
     private void onReceptionistClicked() {
         try {
-            loginFunction();
-//
-//            // Wait for the login function to complete
-//            latch.await();
+            String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/receptionist.fxml";
+            URL resourceUrl = new URL(absolutePath);
+            System.out.println(resourceUrl);
 
-            boolean check = LoginController.checkLogin();
-//            check = true;
+            if (resourceUrl != null) {
+                Parent root = FXMLLoader.load(resourceUrl);
 
-            System.out.println(check);
+                System.out.println("I have fotten this far!!");
 
-            if (check) {
-                String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/receptionist.fxml";
-                URL resourceUrl = new URL(absolutePath);
-                System.out.println(resourceUrl);
+                // Create a new stage
+                Stage newStage = new Stage();
 
-                if (resourceUrl != null) {
-                    Parent root = FXMLLoader.load(resourceUrl);
+                // Set the scene on the new stage
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/css/receptionist.css").toExternalForm());
 
-                    // Create a new stage
-                    Stage newStage = new Stage();
 
-                    // Set the scene on the new stage
-                    Scene scene = new Scene(root);
-                    scene.getStylesheets().add(getClass().getResource("/css/receptionist.css").toExternalForm());
+                newStage.setScene(scene);
 
-                    newStage.setScene(scene);
+                // Set any other properties for the new stage if needed
+                newStage.setTitle("Receptionist Page");
 
-                    // Set any other properties for the new stage if needed
-                    newStage.setTitle("Receptionist Page");
-
-                    // Show the new stage
-                    newStage.show();
-                } else {
-                    System.err.println("receptionist.fxml not found");
-                }
+                // Show the new stage
+                newStage.show();
             } else {
-                System.out.println("Login failed, cannot proceed to the receptionist page.");
+                System.err.println("MainScene.fxml not found");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,61 +71,97 @@ public class MainScene {
             System.out.println("Caught an exception: " + e.getMessage());
             e.printStackTrace();
         }
+//            loginFunction();
     }
 
     private void loginFunction() {
         latch = new CountDownLatch(1);
 
-        try {
-            String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
-            URL loginUrl = new URL(loginPath);
-            Parent loginRoot = FXMLLoader.load(loginUrl);
+        Platform.runLater(() -> {
+            try {
+                String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
+                URL loginUrl = new URL(loginPath);
+                Parent loginRoot = FXMLLoader.load(loginUrl);
 
-            Stage newStage = new Stage();
-            Scene loginScene = new Scene(loginRoot);
 
-            newStage.setScene(loginScene);
-            newStage.setTitle("Receptionist Page");
 
-            newStage.setOnHiding(event -> {
-                latch.countDown(); // Release the latch when the login window is closed
+                Stage newStage = new Stage();
+
+                Scene loginScene = new Scene(loginRoot);
+
+                newStage.setScene(loginScene);
+                newStage.setTitle("Receptionist Page");
+
+                newStage.setOnHiding(event -> {
+                    latch.countDown(); // Release the latch when the login window is closed
+                });
+
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                latch.countDown(); // Ensure the latch is released in case of an exception
+            }
+        });
+
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    latch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            Platform.runLater(() -> {
+                boolean check = checkLogin();
+                System.out.println(check);
+
+                if (check) {
+                    try {
+                        String absolutePath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/java/com/hospital/module/view/receptionist.fxml";
+                        URL resourceUrl = new URL(absolutePath);
+                        System.out.println(resourceUrl);
+
+                        if (resourceUrl != null) {
+                            Parent root = FXMLLoader.load(resourceUrl);
+
+                            System.out.println("I have fotten this far!!");
+
+                            // Create a new stage
+                            Stage newStage = new Stage();
+
+                            // Set the scene on the new stage
+                            Scene scene = new Scene(root);
+                            scene.getStylesheets().add(getClass().getResource("/css/receptionist.css").toExternalForm());
+
+
+                            newStage.setScene(scene);
+
+                            // Set any other properties for the new stage if needed
+                            newStage.setTitle("Receptionist Page");
+
+                            // Show the new stage
+                            newStage.show();
+                        } else {
+                            System.err.println("MainScene.fxml not found");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        System.out.println("Caught an exception: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
             });
+        });
 
-            newStage.show();
-
-            latch.await(); // Wait until the login window is closed
-        } catch (IOException e) {
-            e.printStackTrace();
-            latch.countDown(); // Ensure the latch is released in case of an exception
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            latch.countDown(); // Ensure the latch is released in case of an exception
-        }
+        new Thread(task).start();
     }
 
-//        private void loginFunction() throws IOException {
-//           try {
-//               String loginPath = "file:/C:/Users/DELL/IdeaProjects/Hopital-Management-System/src/main/resources/fxml/login_view.fxml";
-//               URL loginUrl = new URL(loginPath);
-//               Parent loginRoot = FXMLLoader.load(loginUrl);
-//
-//               Stage newwStage = new Stage();
-//               Scene loginScene = new Scene(loginRoot);
-
-//               newwStage.setScene(loginScene);
-//
-//               newwStage.setTitle("Receptionist Page");
-//
-//
-//               newwStage.show();
-//
-//           }catch (IOException e) {
-//               e.printStackTrace();
-//           } catch (Exception e) {
-//               System.out.println("Caught an exception: " + e.getMessage());
-//               e.printStackTrace();
-//           }
-//        };
 
         @FXML
         private void onDoctorClicked() {

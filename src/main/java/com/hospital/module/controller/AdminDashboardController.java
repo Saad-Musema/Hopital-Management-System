@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import javax.swing.*;
+
 public class AdminDashboardController {
 
     @FXML
@@ -41,10 +43,24 @@ public class AdminDashboardController {
         // Insert user into the database
         if (name != null && !name.isEmpty() && email != null && !email.isEmpty()
                 && password != null && !password.isEmpty() && userType != null && !userType.isEmpty()) {
+
+            if (!isValidEmail(email)) {
+                JOptionPane.showMessageDialog(null, "Invalid email format. Please enter a valid email address.", "Error", JOptionPane.WARNING_MESSAGE);
+                return; // Exit method if email format is invalid
+            }
+
             addUserToDatabase(name, email, hashedPassword, userType);
+            JOptionPane.showMessageDialog(null, "User added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             System.out.println("Please fill in all fields.");
+            JOptionPane.showMessageDialog(null, "Failed to add user. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        // Regular expression for basic email validation
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 
     private String hashPassword(String password) {

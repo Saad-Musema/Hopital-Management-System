@@ -1,5 +1,6 @@
 package com.hospital.module.controller;
 
+import com.hospital.module.Main;
 import com.hospital.module.db.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,12 +8,22 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.CountDownLatch;
+
+import static com.hospital.module.view.MainScene.latch;
 
 public class LoginController {
+
+    private Stage loginStage;
+
+    public void setLoginStage(Stage stage) {
+        this.loginStage = stage;
+    }
 
     @FXML
     private TextField emailField;
@@ -46,20 +57,18 @@ public class LoginController {
         boolean isValidUser = validateCredentials(email, password);
 
         if (isValidUser) {
+            JOptionPane.showMessageDialog(null, "Login successful.", "Success", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("Login successful. User role: " + userRole);
+
+            latch.countDown();
+
             if ("Doctor".equals(userRole)) {
                 System.out.println("Doctor ID: " + doctorId);
             }
-
-            // Close the current stage
-            SceneManager sceneManager = new SceneManager();
-            sceneManager.closeStage();
-            stage.close();
-
-
         } else {
+            JOptionPane.showMessageDialog(null, "Login failed. Please check your email and password.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Login failed. Please check your email and password.");
-            // Optionally, display an error message to the user
+
         }
     }
 

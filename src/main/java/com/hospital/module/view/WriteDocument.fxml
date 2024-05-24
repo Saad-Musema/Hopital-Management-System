@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hospital.module.controller.WriteDocumentController"
+      alignment="TOP_CENTER" spacing="10" style="-fx-padding: 10;" styleClass="main-container">
+    <Label text="Write Medical Document" styleClass="header"/>
+    <Label text="Date:"/>
+    <DatePicker fx:id="dateField" styleClass="date-picker"/>
+    <Label text="Patient ID:"/>
+    <TextField fx:id="patientIdField" styleClass="text-field"/>
+    <Label text="Note:"/>
+    <TextArea fx:id="noteField" prefHeight="200" prefWidth="400" styleClass="text-area"/>
+    <Button text="Submit" onAction="#writeMedicalDocument" styleClass="button"/>
+</VBox>
